@@ -1,0 +1,7 @@
+.venv
+.env
+*.pyc
+__pycache__/
+db.sqlite3
+kanban-backend/project_backgrounds
+kanban-backend/attachments
