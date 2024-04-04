@@ -4,8 +4,9 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form as BootstrapForm, Alert, Container, Row, Col, Card } from 'react-bootstrap';
 import { SignupFormValues } from '../../../types';
-import { signup } from '../authService';
 import SignUpImg from '../../../assets/bg4.jpg'
+import { useAppDispatch } from '../../../app/hooks';
+import { register } from '../authSlice';
 
 const initialValues: SignupFormValues = {
     username: '',
@@ -27,31 +28,21 @@ export const validationSchema = Yup.object({
 
 export const SignupForm: React.FC = () => {
     const navigate = useNavigate();
-  
-    // handleSubmit now makes use of navigate directly, without passing it around
+    const dispatch = useAppDispatch();
+
     const handleSubmit = async (
       values: SignupFormValues,
       { setSubmitting, resetForm }: FormikHelpers<SignupFormValues>
     ) => {
-      try {
-        await signup(values);
-        navigate('/verification-sent'); // Correct usage within the component body
+      // Define what to do after successful signup
+      const onSignupSuccess = () => {
+        navigate('/verification-sent'); // Navigate on successful signup
         resetForm();
-      } catch (error: any) {
-        setSubmitting(false);
-      
-      if (error.response && error.response.data) {
-        const fieldErrors = error.response.data;
-        let errorMessage = 'Signup failed. Please check your input.';
-        
-        if (fieldErrors.username) {
-          errorMessage = `Username error: ${fieldErrors.username.join(' ')}`;
-        }       
-        alert(errorMessage); // Or use a more sophisticated method to display errors
-      } else {
-        alert('Signup failed. Please try again later.');
-      }
-      }
+      };
+
+      dispatch(register(values, onSignupSuccess));
+
+      setSubmitting(false); // Likely want to move or handle this differently based on Redux state
     };
     
     return(
