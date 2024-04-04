@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const SIGNUP_ENDPOINT = 'http://localhost:8000/api/v1/users/register/';
-const SIGNIN_ENDPOINT = 'http://localhost:8000/api/v1/auth/signin/';
+const SIGNIN_ENDPOINT = 'http://localhost:8000/api/v1/dj-rest-auth/login/';
 
 
 interface SignupPayload {

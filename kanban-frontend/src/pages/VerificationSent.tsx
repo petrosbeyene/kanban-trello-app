@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 
-const VerificationSent: React.FC = () => {
+export const VerificationSent: React.FC = () => {
   return (
     <Container className="mt-5"> {/* Adds margin top for spacing */}
       <Row className="justify-content-md-center"> {/* Centers the content on medium devices and up */}
@@ -17,5 +17,3 @@ const VerificationSent: React.FC = () => {
     </Container>
   );
 }
-
-export default VerificationSent;

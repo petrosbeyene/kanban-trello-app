@@ -170,8 +170,6 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'http://localhost:8000/a
 LOGIN_URL = 'http://localhost:8000/api/v1/dj-rest-auth/login/'
 
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 

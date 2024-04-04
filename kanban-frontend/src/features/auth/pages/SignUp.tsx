@@ -3,9 +3,9 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form as BootstrapForm, Alert, Container, Row, Col, Card } from 'react-bootstrap';
-import { SignupFormValues } from '../types';
-import { signup } from '../api/authService';
-import SignUpImg from '../assets/signup-img.jpg';
+import { SignupFormValues } from '../../../types';
+import { signup } from '../authService';
+import SignUpImg from '../../../assets/bg4.jpg'
 
 const initialValues: SignupFormValues = {
     username: '',
@@ -65,7 +65,7 @@ export const SignupForm: React.FC = () => {
             <Col md={8} className="d-flex align-items-center justify-content-center">
                 <Card style={{ width: '100%', maxWidth: '500px', margin: 'auto', boxShadow: '0 4px 8px rgba(0,0,0,.1)' }}>
                 <Card.Body>
-                    <Card.Title className="text-center mb-4">Signup</Card.Title>
+                    <Card.Title className="text-center mb-4">Signup Form</Card.Title>
                     <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
