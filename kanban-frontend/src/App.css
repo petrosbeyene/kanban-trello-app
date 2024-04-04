@@ -5,6 +5,20 @@
   text-align: center;
 }
 
+/* App.css or a similar global CSS file */
+.navbar {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 100; /* Ensures the navbar stays on top of other content */
+}
+
+/* Ensure the body or root container has no padding or margin that would offset the navbar */
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

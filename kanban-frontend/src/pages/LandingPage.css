@@ -1,0 +1,12 @@
+.landing-background {
+    background-image: url('../assets/kanban-bg.webp');
+    /* background-size: cover; */
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+.overlay {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    padding: 20px; /* Or as needed */
+    border-radius: 5px; /* Optional, for rounded corners */
+}
