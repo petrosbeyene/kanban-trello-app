@@ -28,6 +28,7 @@ urlpatterns = [
     # Comment URLs for a Task
     path('tasks/<int:task_pk>/comments/', CommentListCreateView.as_view(), name='comment-list'),
     path('tasks/<int:task_pk>/comments/<int:pk>/', CommentDetailView.as_view(), name='comment-detail'),
+    
     # Attachment URLs for a Task
     path('tasks/<int:task_pk>/attachments/', AttachmentListCreateView.as_view(), name='attachment-list'),
     path('tasks/<int:task_pk>/attachments/<int:pk>/', AttachmentDetailView.as_view(), name='attachment-detail'),

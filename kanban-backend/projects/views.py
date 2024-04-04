@@ -67,18 +67,20 @@ class TaskListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         column_id = self.kwargs.get('column_pk')
         column = self.get_column(column_id)
-        serializer.save(column=column)
+        serializer.save(column=column, context={'project': column.project, 'column': column_id})
 
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
 
     def get_queryset(self):
-        return Task.objects.filter(column__project__owner=self.request.user)
+        column_pk = self.kwargs.get('column_pk')
+        return Task.objects.filter(column__id=column_pk, column__project__owner=self.request.user)
 
     def get_object(self):
+        queryset = self.get_queryset()
         task_id = self.kwargs.get('pk')
-        return get_object_or_404(Task, pk=task_id, column__project__owner=self.request.user)
+        return get_object_or_404(queryset, pk=task_id)
 
 
 class CommentListCreateView(generics.ListCreateAPIView):
@@ -102,11 +104,13 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     # permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
     def get_queryset(self):
-        return Comment.objects.filter(task__column__project__owner=self.request.user)
+        task_pk = self.kwargs.get('task_pk')
+        return Comment.objects.filter(task__id=task_pk, task__column__project__owner=self.request.user)
 
     def get_object(self):
+        queryset = self.get_queryset()
         comment_id = self.kwargs.get('pk')
-        return get_object_or_404(Comment, pk=comment_id, task__column__project__owner=self.request.user)
+        return get_object_or_404(queryset, pk=comment_id)
 
 
 class LabelListCreateView(generics.ListCreateAPIView):
@@ -130,11 +134,13 @@ class LabelDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LabelSerializer
 
     def get_queryset(self):
-        return Label.objects.filter(project__owner=self.request.user)
+        project_pk = self.kwargs.get('project_pk')
+        return Label.objects.filter(project_id=project_pk, project__owner=self.request.user)
 
     def get_object(self):
+        queryset = self.get_queryset()
         label_id = self.kwargs.get('pk')
-        return get_object_or_404(Label, pk=label_id, project__owner=self.request.user)
+        return get_object_or_404(queryset, pk=label_id)
 
 
 class AttachmentListCreateView(generics.ListCreateAPIView):
@@ -169,9 +175,12 @@ class AttachmentListCreateView(generics.ListCreateAPIView):
 
 class AttachmentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AttachmentSerializer
-    # permission_classes = [IsTaskOwnerOrReadOnly]
 
     def get_queryset(self):
-        # Scope attachments to those belonging to tasks owned by the user
-        return Attachment.objects.filter(task__column__project__owner=self.request.user)
+        task_pk = self.kwargs.get('task_pk')
+        return Attachment.objects.filter(task__id=task_pk, task__column__project__owner=self.request.user)
 
+    def get_object(self):
+        queryset = self.get_queryset()
+        attachment_id = self.kwargs.get('pk')
+        return get_object_or_404(queryset, pk=attachment_id)
