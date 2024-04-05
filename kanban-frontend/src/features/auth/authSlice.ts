@@ -66,6 +66,7 @@ export const login = (email: string, password: string): AppThunk => async (dispa
     }
   } catch (error: any) {
     dispatch(loginFailure(error.message));
+    alert(error.message)
   }
 };
 

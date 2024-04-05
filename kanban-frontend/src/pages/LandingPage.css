@@ -10,3 +10,10 @@
     padding: 20px; /* Or as needed */
     border-radius: 5px; /* Optional, for rounded corners */
 }
+
+/* LandingPage.css or another relevant CSS file */
+.nav-dropdown-title-custom {
+  font-weight: bold !important;
+  font-size: 1.2em !important;
+  color: white !important;
+}

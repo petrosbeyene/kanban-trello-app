@@ -78,7 +78,7 @@ ROOT_URLCONF = 'kanbanapp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -166,8 +166,11 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'http://localhost:8000/api/v1/dj-rest-auth/login/'
-LOGIN_URL = 'http://localhost:8000/api/v1/dj-rest-auth/login/'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'http://localhost:5173/login/'
+LOGIN_URL = 'http://localhost:5173/login'
+
+
+ACCOUNT_ADAPTER = 'users.adapters.custom_email_adapter.CustomEmailAdapter'
 
 
 # Internationalization
@@ -192,6 +195,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.CustomUserSerializer',
+}
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',

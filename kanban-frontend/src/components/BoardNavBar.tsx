@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks'; // Adjust the import path as needed
-import { performLogout } from '../features/auth/authSlice'; // Adjust the import path as needed
+import { useAppDispatch, useAppSelector } from '../app/hooks'; 
+import { performLogout } from '../features/auth/authSlice';
 
 const BoardNavigationBar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const userEmail = useAppSelector((state) => state.auth.user?.email); // Assuming email is stored in user object
+  const userEmail = useAppSelector((state) => state.auth.user?.email);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = () => {
@@ -20,7 +20,7 @@ const BoardNavigationBar: React.FC = () => {
         <Navbar.Brand 
           as={Link} 
           to="/" 
-          style={{ fontWeight: 'bold', fontSize: '1.5em', color: 'black' }} // Changed color to black
+          style={{ fontWeight: 'bold', fontSize: '1.5em', color: 'black' }}
         >
           KanbanApp
         </Navbar.Brand>
@@ -36,7 +36,7 @@ const BoardNavigationBar: React.FC = () => {
                 <Nav.Link 
                   as={Link} 
                   to="/login" 
-                  style={{ color: 'black', margin: '3px' }} // Changed color to black
+                  style={{ color: 'black', margin: '3px' }}
                 >
                   Login
                 </Nav.Link>

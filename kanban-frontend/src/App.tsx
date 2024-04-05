@@ -15,6 +15,7 @@ import { BoardsDisplayMessage } from "./features/boards/pages/boards";
 import { VerificationSent } from "./pages/VerificationSent";
 import useRehydrateAuth from "./hooks/useRehydrateAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import EmailVerification from "./components/EmailVerification";
 
 const App: React.FC = () => {
   useRehydrateAuth();
@@ -25,10 +26,11 @@ const App: React.FC = () => {
         <Route index element={<Landing />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/verification-sent" element={<VerificationSent />} />
+        <Route path="/confirm-email/" element={<EmailVerification />} />
         <Route element={<ProtectedRoute />}>
               <Route path="/boards" element={<BoardsDisplayMessage />} />
         </Route>
-        <Route path="/verification-sent" element={<VerificationSent />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     )

@@ -1,0 +1,7 @@
+Hello from KanbanApp.com!
+
+You're receiving this email because user {{ user.username }} has given your email address to register an account on KanbanApp.com.
+
+To confirm this is correct, go to the following link: {{ activate_url }}
+
+Thank you for using KanbanApp.com!

@@ -5,3 +5,4 @@ __pycache__/
 db.sqlite3
 kanban-backend/project_backgrounds
 kanban-backend/attachments
+kanban-backend/task_covers
