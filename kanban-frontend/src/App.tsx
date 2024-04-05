@@ -11,14 +11,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { SignupForm } from "./features/auth/pages/SignUp";
 import { LoginForm } from "./features/auth/pages/Login";
 import { BoardsDisplayMessage } from "./features/boards/pages/boards";
-import { useAppSelector } from "./app/hooks";
-import { Navigate } from "react-router-dom";
 
 import { VerificationSent } from "./pages/VerificationSent";
+import useRehydrateAuth from "./hooks/useRehydrateAuth";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 const App: React.FC = () => {
-
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  useRehydrateAuth();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,7 +25,9 @@ const App: React.FC = () => {
         <Route index element={<Landing />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/boards" element={isLoggedIn ? <BoardsDisplayMessage /> : <Navigate to='/signup' />} />
+        <Route element={<ProtectedRoute />}>
+              <Route path="/boards" element={<BoardsDisplayMessage />} />
+        </Route>
         <Route path="/verification-sent" element={<VerificationSent />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form as BootstrapForm, Alert, Container, Row, Col, Card } from 'react-bootstrap';
 import { SignupFormValues } from '../../../types';
 import SignUpImg from '../../../assets/bg4.jpg'
-import { useAppDispatch } from '../../../app/hooks';
-import { register } from '../authSlice';
+import { signup } from '../authService';
+import { useAppSelector } from '../../../app/hooks';
+import { useEffect } from 'react';
 
 const initialValues: SignupFormValues = {
     username: '',
@@ -28,21 +29,27 @@ export const validationSchema = Yup.object({
 
 export const SignupForm: React.FC = () => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+
+    const loginStatus = useAppSelector(state => state.auth.isLoggedIn);
+
+    useEffect(() => {
+        if (loginStatus) {
+        navigate('/boards');
+        }
+    }, [loginStatus]);
 
     const handleSubmit = async (
       values: SignupFormValues,
-      { setSubmitting, resetForm }: FormikHelpers<SignupFormValues>
+      { setSubmitting }: FormikHelpers<SignupFormValues>
     ) => {
-      // Define what to do after successful signup
-      const onSignupSuccess = () => {
+      try {
+        await signup(values); // Directly call the signup service with form values
         navigate('/verification-sent'); // Navigate on successful signup
-        resetForm();
-      };
-
-      dispatch(register(values, onSignupSuccess));
-
-      setSubmitting(false); // Likely want to move or handle this differently based on Redux state
+      } catch (error: any) {
+        alert(error.response.data.detail || "An error occurred during signup."); // Simplistic error handling, consider improving
+      } finally {
+        setSubmitting(false); // Ensure submitting is set to false in all cases
+      }
     };
     
     return(

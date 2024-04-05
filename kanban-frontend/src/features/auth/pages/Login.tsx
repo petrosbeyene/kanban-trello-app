@@ -14,7 +14,7 @@ export const LoginForm: React.FC = () => {
 
   useEffect(() => {
     if (loginStatus) {
-      navigate('/boards'); // Redirect here
+      navigate('/boards');
     }
   }, [loginStatus]);
 

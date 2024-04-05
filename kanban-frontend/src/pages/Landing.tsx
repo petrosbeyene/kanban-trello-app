@@ -22,7 +22,7 @@ const Landing: React.FC = () => {
                         Kanban's boards, lists, and cards enable you to organize and
                         prioritize your projects in a fun, flexible, and rewarding way.
                     </h4>
-                    <Link to="/register" className="btn-link">
+                    <Link to="/signup" className="btn-link">
                         <Button variant="primary">Sign Up For Free</Button>
                     </Link>
                 </div>
