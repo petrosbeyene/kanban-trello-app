@@ -36,7 +36,6 @@ export const ProjectsDisplay: React.FC = () => {
     setShowEditModal(true);
   };
 
-
   const handleUpdateProject = (formData: FormData) => {
     if (selectedProject && selectedProject.id) {
       dispatch(updateProject({ id: selectedProject.id, formData }));
@@ -45,8 +44,6 @@ export const ProjectsDisplay: React.FC = () => {
       console.error('Project ID is undefined');
     }
   };
-  
-  
 
   const handleDeleteProject = () => {
     if (selectedProject && selectedProject.id) {
@@ -71,7 +68,7 @@ export const ProjectsDisplay: React.FC = () => {
                 {projects.map((project) => (
                   <Col key={project.id}>
                     <ProjectCard
-                      imageUrl={project.background_image || "defaultImageUrl"}
+                      imageUrl={project.background_image || "https://images.app.goo.gl/4ZvEz1QuLvCMu1k37"}
                       title={project.title}
                       description={project.description}
                       onClick={() => handleCardClick(project)}

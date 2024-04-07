@@ -47,6 +47,7 @@ const PasswordResetRequest: React.FC = () => {
                             <Button variant="primary" type="submit" className="mt-3 w-100" disabled={passwordResetStatus === 'loading'}>
                                 {passwordResetStatus === 'loading' ? 'Sending...' : 'Submit'}
                             </Button>
+                            <a href='/' className='mt-3 w-100'>Go back to home</a>
                         </Form>
                     </div>
                 </Col>

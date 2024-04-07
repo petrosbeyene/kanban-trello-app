@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
-import './LandingPage.css'; // Ensure you have this CSS file in your project
+import './LandingPage.css';
+import { useAppSelector } from '../app/hooks';
 
-// Assuming the useDocumentTitle hook is commented out intentionally
-// import useDocumentTitle from '../hooks/useDocumentTitle';
-
-// import bgImage from '../assets/landingbg.jpg';
 import TransparentNavbar from '../components/NavBar';
 
 const Landing: React.FC = () => {
-    // useDocumentTitle('Kanban');
+    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
     return (
         <div className='landing-background'>
@@ -22,9 +19,15 @@ const Landing: React.FC = () => {
                         Kanban's boards, lists, and cards enable you to organize and
                         prioritize your projects in a fun, flexible, and rewarding way.
                     </h4>
-                    <Link to="/signup" className="btn-link">
-                        <Button variant="primary">Sign Up For Free</Button>
-                    </Link>
+                    {isLoggedIn ? (
+                        <Link to="/boards" className="btn-link">
+                            <Button variant="primary">Go to boards</Button>
+                        </Link>
+                    ): (
+                        <Link to="/signup" className="btn-link">
+                            <Button variant="primary">Sign Up For Free</Button>
+                        </Link>
+                    )}
                 </div>
             </Container>
         </div>

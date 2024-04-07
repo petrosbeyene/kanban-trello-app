@@ -17,6 +17,8 @@ const CreateProjectModal: React.FC<CreateProjectModalProps> = ({ show, onHide, c
     e.preventDefault();
     createProject({ title, description, background: image });
     onHide(); // Reset form and close modal
+    setTitle('');
+    setDescription('');
   };
 
   return (

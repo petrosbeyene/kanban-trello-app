@@ -33,12 +33,12 @@ export const fetchProjects = async () => {
 export const createProject = async (project: Project) => {
     const formData = new FormData();
     Object.entries(project).forEach(([key, value]) => {
-      if (key !== 'background_image') {
+      if (key !== 'background') {
         formData.append(key, String(value));
       }
     });
-    if (project.background_image) {
-      formData.append('background_image', project.background_image);
+    if (project.background) {
+      formData.append('background_image', project.background);
     }
   
     try {
