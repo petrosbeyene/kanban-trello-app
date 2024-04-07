@@ -11,6 +11,7 @@ class Project(models.Model):
     background_color = models.CharField(max_length=7, blank=True, null=True, help_text="Hex color code")
     background_image_url = models.URLField(blank=True, null=True, help_text="URL of a predefined background image")
     background_image = models.ImageField(upload_to='project_backgrounds/', blank=True, null=True, help_text="User-uploaded background image")
+    archived = models.BooleanField(default=False, help_text="Indicates if the project has been archived.")
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

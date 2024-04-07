@@ -5,6 +5,8 @@ from projects.serializers import ProjectSerializer, ColumnSerializer, TaskSerial
 from rest_framework.permissions import IsAuthenticated
 # from projects.permissions import IsAuthorOrReadOnly
 from rest_framework.exceptions import NotFound, PermissionDenied
+from rest_framework import status
+from rest_framework.response import Response
 
 
 class ProjectListCreateView(generics.ListCreateAPIView):
@@ -15,7 +17,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
         return Project.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(owner=self.request.user, archived=False)
 
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -23,7 +25,13 @@ class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Project.objects.filter(owner=self.request.user)
+        return Project.objects.filter(owner=self.request.user, archived=False)
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.archived = True
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ColumnListCreateView(generics.ListCreateAPIView):
