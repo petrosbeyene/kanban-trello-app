@@ -1,17 +1,16 @@
 import React from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks'; 
-import { performLogout } from '../features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'; 
+import { performLogout } from '../../auth/authSlice';
 
-const BoardNavigationBar: React.FC = () => {
+const ProjectsNavigationBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const userEmail = useAppSelector((state) => state.auth.user?.email);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = () => {
     dispatch(performLogout());
-    // Add any additional logout logic here, e.g., redirecting to homepage
   };
 
   return (
@@ -50,4 +49,4 @@ const BoardNavigationBar: React.FC = () => {
   );
 };
 
-export default BoardNavigationBar;
+export default ProjectsNavigationBar;

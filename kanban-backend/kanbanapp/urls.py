@@ -19,6 +19,10 @@ from django.urls import path, include, re_path
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
 
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/dj-rest-auth/', include('dj_rest_auth.urls')),
@@ -27,4 +31,4 @@ urlpatterns = [
     path('api/v1/dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('api/v1/users/', include('users.urls')),
     path('api/projects/', include('projects.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

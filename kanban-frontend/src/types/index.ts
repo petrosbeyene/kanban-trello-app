@@ -16,4 +16,13 @@ export interface User {
     email: string;
     first_name: string;
     last_name: string;
-  }
+}
+
+export interface Project {
+    id?: number;
+    title: string;
+    description: string;
+    background_color?: string;
+    background_image?: string;
+    background: File | null;
+}

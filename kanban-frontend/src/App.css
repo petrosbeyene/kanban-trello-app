@@ -54,3 +54,10 @@ body, html {
 .read-the-docs {
   color: #888;
 }
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+

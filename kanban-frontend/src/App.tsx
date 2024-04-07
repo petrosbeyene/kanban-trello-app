@@ -10,7 +10,7 @@ import Landing from "./pages/Landing";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SignupForm } from "./features/auth/pages/SignUp";
 import { LoginForm } from "./features/auth/pages/Login";
-import { BoardsDisplayMessage } from "./features/boards/pages/boards";
+import { ProjectsDisplay } from "./features/boards/pages/projects";
 
 import { VerificationSent } from "./pages/VerificationSent";
 import useRehydrateAuth from "./hooks/useRehydrateAuth";
@@ -29,7 +29,7 @@ const App: React.FC = () => {
         <Route path="/verification-sent" element={<VerificationSent />} />
         <Route path="/confirm-email/" element={<EmailVerification />} />
         <Route element={<ProtectedRoute />}>
-              <Route path="/boards" element={<BoardsDisplayMessage />} />
+              <Route path="/boards" element={<ProjectsDisplay />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

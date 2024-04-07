@@ -76,7 +76,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     columns = ColumnSerializer(many=True, read_only=True)
     labels = LabelSerializer(many=True, read_only=True)
     background = serializers.SerializerMethodField()
-
+    owner = serializers.PrimaryKeyRelatedField(read_only=True)
+    
     class Meta:
         model = Project
         fields = ['id', 'owner', 'title', 'description', 'created_at', 'columns', 'labels', 'background_color', 'background_image_url', 'background_image', 'background']

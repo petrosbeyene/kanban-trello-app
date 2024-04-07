@@ -2,13 +2,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from projects.models import Project, Column, Task, Comment, Label, Attachment
 from projects.serializers import ProjectSerializer, ColumnSerializer, TaskSerializer, CommentSerializer, LabelSerializer, AttachmentSerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 # from projects.permissions import IsAuthorOrReadOnly
 from rest_framework.exceptions import NotFound, PermissionDenied
 
 
 class ProjectListCreateView(generics.ListCreateAPIView):
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Project.objects.filter(owner=self.request.user)
@@ -19,6 +20,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Project.objects.filter(owner=self.request.user)
@@ -26,6 +28,7 @@ class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class ColumnListCreateView(generics.ListCreateAPIView):
     serializer_class = ColumnSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_project(self, pk):
         return get_object_or_404(Project, pk=pk)
@@ -43,6 +46,7 @@ class ColumnListCreateView(generics.ListCreateAPIView):
 
 class ColumnDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ColumnSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Column.objects.filter(project__owner=self.request.user)
@@ -55,6 +59,7 @@ class ColumnDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class TaskListCreateView(generics.ListCreateAPIView):
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_column(self, pk):
         return get_object_or_404(Column, pk=pk)
@@ -72,6 +77,7 @@ class TaskListCreateView(generics.ListCreateAPIView):
 
 class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         column_pk = self.kwargs.get('column_pk')
@@ -85,6 +91,8 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class CommentListCreateView(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
     def get_task(self, pk):
         return get_object_or_404(Task, pk=pk)
 
@@ -102,6 +110,7 @@ class CommentListCreateView(generics.ListCreateAPIView):
 class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
     # permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         task_pk = self.kwargs.get('task_pk')
@@ -115,6 +124,7 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 class LabelListCreateView(generics.ListCreateAPIView):
     serializer_class = LabelSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_project(self, pk):
         return get_object_or_404(Project, pk=pk)
@@ -132,6 +142,7 @@ class LabelListCreateView(generics.ListCreateAPIView):
 
 class LabelDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = LabelSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         project_pk = self.kwargs.get('project_pk')
@@ -146,6 +157,7 @@ class LabelDetailView(generics.RetrieveUpdateDestroyAPIView):
 class AttachmentListCreateView(generics.ListCreateAPIView):
     serializer_class = AttachmentSerializer
     # permission_classes = [IsTaskOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def get_task(self, pk):
         try:
@@ -175,6 +187,7 @@ class AttachmentListCreateView(generics.ListCreateAPIView):
 
 class AttachmentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AttachmentSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         task_pk = self.kwargs.get('task_pk')
