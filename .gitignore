@@ -3,6 +3,6 @@
 *.pyc
 __pycache__/
 db.sqlite3
-kanban-backend/project_backgrounds
+kanban-backend/media/project_backgrounds
 kanban-backend/attachments
-kanban-backend/task_covers
+kanban-backend/media/task_covers
