@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../../app/store';
-import { signin, fetchUserDetails, logOut } from './authService';
+import { signin, fetchUserDetails, logOut, resetPassword, handleConfirmPasswordReset } from './authService';
 import { User } from '../../types';
 
 
@@ -10,6 +10,7 @@ interface AuthState {
   loading: boolean;
   error: string | null;
   user: User | null;
+  passwordResetStatus: 'idle' | 'loading' | 'success' | 'failure';
 }
 
 const initialState: AuthState = {
@@ -18,6 +19,7 @@ const initialState: AuthState = {
   loading: false,
   error: null,
   user: null,
+  passwordResetStatus: 'idle',
 };
 
 export const authSlice = createSlice({
@@ -32,24 +34,50 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.loading = false;
       state.error = null;
-      state.token = action.payload.token; // Store the token
-      state.user = action.payload.user; // Store the user details
+      state.token = action.payload.token;
+      state.user = action.payload.user;
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
-      state.token = null; // Ensure token is cleared on failure
+      state.token = null;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.token = null;
       state.user = null;
-    }
+    },
+    passwordResetStart: (state) => {
+      state.passwordResetStatus = 'loading';
+    },
+    passwordResetSuccess: (state) => {
+      state.passwordResetStatus = 'success';
+    },
+    passwordResetFailure: (state, action: PayloadAction<string>) => {
+      state.passwordResetStatus = 'failure';
+      state.error = action.payload;
+    },
+    resetPasswordResetStatus: (state) => {
+      state.passwordResetStatus = 'idle';
+      state.error = null;
+    },
+    confirmPasswordResetStart: (state) => {
+      state.loading = true;
+    },
+    confirmPasswordResetSuccess: (state) => {
+      state.loading = false;
+    },
+    confirmPasswordResetFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
 export const {
-  loginStart, loginSuccess, loginFailure, logout
+  loginStart, loginSuccess, loginFailure, logout,
+  passwordResetStart, passwordResetSuccess, passwordResetFailure, resetPasswordResetStatus,
+  confirmPasswordResetStart, confirmPasswordResetFailure, confirmPasswordResetSuccess
 } = authSlice.actions;
 
 // Adjust login thunk
@@ -83,5 +111,30 @@ export const performLogout = (): AppThunk => async (dispatch) => {
   }
 };
 
+
+export const requestPasswordReset = (email: string): AppThunk => async (dispatch) => {
+  dispatch(passwordResetStart());
+  try {
+    await resetPassword(email);
+    dispatch(passwordResetSuccess());
+    alert("If an account with the provided email exists, you will receive a password reset email shortly.");
+  } catch (error: any) {
+    dispatch(passwordResetFailure(error.toString()));
+    alert(error.message);
+  }
+};
+
+
+export const confirmPasswordReset = (uidb64: string, token: string, newPassword1: string, newPassword2: string): AppThunk => async (dispatch) => {
+  dispatch(confirmPasswordResetStart());
+  try {
+    await handleConfirmPasswordReset(uidb64, token, newPassword1, newPassword2);
+    dispatch(confirmPasswordResetSuccess());
+    alert("Success!")
+  } catch (error: any) {
+    dispatch(confirmPasswordResetFailure(error.toString()));
+    alert(error.toString())
+  }
+};
 
 export default authSlice.reducer;

@@ -16,6 +16,8 @@ import { VerificationSent } from "./pages/VerificationSent";
 import useRehydrateAuth from "./hooks/useRehydrateAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import EmailVerification from "./components/EmailVerification";
+import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
+import PasswordResetRequest from "./features/auth/pages/PasswordResetRequest";
 
 const App: React.FC = () => {
   useRehydrateAuth();
@@ -28,6 +30,8 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/verification-sent" element={<VerificationSent />} />
         <Route path="/confirm-email/" element={<EmailVerification />} />
+        <Route path="/reset-password" element={<PasswordResetRequest/>} />
+        <Route path="/reset-password/:uidb64/:token" element={<ResetPasswordPage />} />
         <Route element={<ProtectedRoute />}>
               <Route path="/boards" element={<ProjectsDisplay />} />
         </Route>
