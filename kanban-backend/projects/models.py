@@ -27,7 +27,7 @@ class Project(models.Model):
         elif self.background_color:
             return self.background_color
         else:
-            return None  # Default background or a predefined setting can be used
+            return None
 
 class Column(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="columns")
@@ -41,7 +41,7 @@ class Column(models.Model):
 class Label(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='labels')
     title = models.CharField(max_length=255, blank=True)
-    color = models.CharField(max_length=7) # Ensure this includes # for hex code.
+    color = models.CharField(max_length=7)
 
     def __str__(self):
         return self.title
@@ -54,7 +54,6 @@ class Task(models.Model):
     due_date = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
 
-    # For labeling tasks
     labels = models.ManyToManyField('Label', blank=True)
 
     cover_color = models.CharField(max_length=7, blank=True, help_text="Hex color code, including the '#'.")
@@ -73,7 +72,7 @@ class Task(models.Model):
         elif self.cover_color:
             return self.cover_color
         else:
-            return None  # No cover specified
+            return None
 
 
 class Comment(models.Model):

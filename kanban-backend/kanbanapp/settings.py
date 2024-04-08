@@ -167,8 +167,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'http://localhost:5173/login/'
-LOGIN_URL = 'http://localhost:5173/login'
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = os.environ.get("LOGIN_URL")
+LOGIN_URL = os.environ.get("LOGIN_URL")
 
 
 ACCOUNT_ADAPTER = 'users.adapters.custom_email_adapter.CustomEmailAdapter'

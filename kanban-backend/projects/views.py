@@ -14,10 +14,10 @@ class ProjectListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Project.objects.filter(owner=self.request.user)
+        return Project.objects.filter(owner=self.request.user, archived=False)
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user, archived=False)
+        serializer.save(owner=self.request.user)
 
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
