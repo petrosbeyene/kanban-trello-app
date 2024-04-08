@@ -10,12 +10,12 @@ import Landing from "./pages/Landing";
 import NotFoundPage from "./pages/NotFoundPage";
 import { SignupForm } from "./features/auth/pages/SignUp";
 import { LoginForm } from "./features/auth/pages/Login";
-import { ProjectsDisplay } from "./features/boards/pages/projects";
+import { ProjectsDisplay } from "./features/projects/pages/projects";
 
-import { VerificationSent } from "./pages/VerificationSent";
+import { VerificationSent } from "./features/auth/components/VerificationSent";
 import useRehydrateAuth from "./hooks/useRehydrateAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import EmailVerification from "./components/EmailVerification";
+import EmailVerification from "./features/auth/pages/EmailVerification";
 import ResetPasswordPage from "./features/auth/pages/ResetPasswordPage";
 import PasswordResetRequest from "./features/auth/pages/PasswordResetRequest";
 

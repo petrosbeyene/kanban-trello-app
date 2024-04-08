@@ -2,13 +2,14 @@
 import axios from 'axios';
 import { Project } from '../../types';
 
-const API_BASE_URL = 'http://localhost:8000/api/projects/'; // Adjust this URL based on your actual API's URL
+
+const { VITE_PROJECTS_BASE_URL } = import.meta.env;
 
 
 export const fetchProjects = async () => {
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.get(API_BASE_URL, {
+    const response = await axios.get(VITE_PROJECTS_BASE_URL, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -18,17 +19,6 @@ export const fetchProjects = async () => {
     throw new Error('Error fetching projects');
   }
 };
-
-// export const fetchProjectById = async (id: number) => {
-//   try {
-//     const response = await axios.get(`${API_BASE_URL}/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error('Error fetching project');
-//   }
-// };
-
-// In projectService.js or projectService.ts
 
 export const createProject = async (project: Project) => {
     const formData = new FormData();
@@ -43,7 +33,7 @@ export const createProject = async (project: Project) => {
   
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(API_BASE_URL, formData, {
+      const response = await axios.post(VITE_PROJECTS_BASE_URL, formData, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -58,7 +48,7 @@ export const createProject = async (project: Project) => {
 export const updateProject = async (id: number, formData: FormData) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.put(`${API_BASE_URL}${id}/`, formData, {
+        const response = await axios.put(`${VITE_PROJECTS_BASE_URL}${id}/`, formData, {
             headers: {
                 Authorization: `Token ${token}`,
             },
@@ -74,7 +64,7 @@ export const updateProject = async (id: number, formData: FormData) => {
 export const deleteProject = async (id: number) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.delete(`${API_BASE_URL}${id}/`, {
+        const response = await axios.delete(`${VITE_PROJECTS_BASE_URL}${id}/`, {
             headers: {
                 Authorization: `Token ${token}`,
             },

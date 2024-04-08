@@ -13,12 +13,10 @@ const useRehydrateAuth = () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          // Optional: Validate token or fetch user details from backend
           const userDetails = await fetchUserDetails(token);
           dispatch(loginSuccess({ token, user: userDetails }));
         } catch (error) {
           console.error("Error rehydrating auth", error);
-          // Handle any errors, such as clearing invalid tokens or redirecting
         }
       }
     };

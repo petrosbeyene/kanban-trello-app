@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
 import { Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { verifyEmail } from '../authSlice'; // Adjust the path as necessary
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 
 const EmailVerification: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'failure'>('loading');
+    const dispatch = useAppDispatch();
+    const verificationStatus = useAppSelector(state => state.auth.emailVerificationStatus);
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const token = searchParams.get('token');
         if (token) {
-            verifyEmail(token);
+            dispatch(verifyEmail(token));
         }
-    }, [location]);
-
-    const verifyEmail = async (token: string) => {
-        try {
-            const url = `http://localhost:8000/api/v1/dj-rest-auth/registration/account-confirm-email/${token}/`;
-            const response = await axios.get(url);
-    
-            if (response.status === 200) {
-                setVerificationStatus('success');
-            } else {
-                setVerificationStatus('failure');
-            }
-        } catch (error) {
-            console.error('There was an error verifying the email:', error);
-            setVerificationStatus('failure');
-        }
-    };
+    }, [location, dispatch]);
 
     return (
         <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>

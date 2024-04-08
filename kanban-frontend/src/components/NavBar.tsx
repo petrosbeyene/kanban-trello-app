@@ -51,7 +51,8 @@ const NavigationBar: React.FC = () => {
                 >
                   Login
                 </Nav.Link>
-                <Button variant="primary" as={Link as any} to="/signup">SignUp</Button>
+                <Button variant="primary" as={Link as any} className='m-1' to="/signup">SignUp</Button>
+                <Button variant="primary" as={Link as any} className='m-1' to="/reset-password">Reset Password</Button>
               </>
             )}
           </Nav>

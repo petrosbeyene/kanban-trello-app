@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../../app/store';
-import { signin, fetchUserDetails, logOut, resetPassword, handleConfirmPasswordReset } from './authService';
-import { User } from '../../types';
+import { signup, signin, fetchUserDetails, logOut, resetPassword, handleConfirmPasswordReset, verifyEmailToken } from './authService';
+import { User, SignupFormValues } from '../../types';
 
 
 interface AuthState {
+  signupStatus: 'idle' | 'loading' | 'success' | 'failure';
+  emailVerificationStatus: 'idle' | 'loading' | 'success' | 'failure';
   token: string | null;
   isLoggedIn: boolean;
   loading: boolean;
@@ -14,6 +16,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  signupStatus: 'idle',
+  emailVerificationStatus: 'idle',
   token: null,
   isLoggedIn: false,
   loading: false,
@@ -26,6 +30,24 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    signupStart: (state) => {
+      state.signupStatus = 'loading';
+    },
+    signupSuccess: (state) => {
+      state.signupStatus = 'success';
+    },
+    signupFailure: (state) => {
+      state.signupStatus = 'failure';
+    },
+    emailVerificationStart: (state) => {
+      state.emailVerificationStatus = 'loading';
+    },
+    emailVerificationSuccess: (state) => {
+      state.emailVerificationStatus = 'success';
+    },
+    emailVerificationFailure: (state) => {
+      state.emailVerificationStatus = 'failure';
+    },
     loginStart: (state) => {
       state.loading = true;
       state.error = null;
@@ -75,10 +97,37 @@ export const authSlice = createSlice({
 });
 
 export const {
+  signupStart, signupSuccess, signupFailure,
+  emailVerificationStart, emailVerificationSuccess, emailVerificationFailure,
   loginStart, loginSuccess, loginFailure, logout,
   passwordResetStart, passwordResetSuccess, passwordResetFailure, resetPasswordResetStatus,
   confirmPasswordResetStart, confirmPasswordResetFailure, confirmPasswordResetSuccess
 } = authSlice.actions;
+
+// Thunk for signup
+export const performSignup = (signupData: SignupFormValues): AppThunk => async (dispatch) => {
+  dispatch(signupStart());
+  try {
+    await signup(signupData);
+    dispatch(signupSuccess());
+  } catch (error: any) {
+    dispatch(signupFailure());
+    console.error('Signup error:', error.message);
+    throw error;
+  }
+};
+
+// Thunk for email verification
+export const verifyEmail = (token: string): AppThunk => async (dispatch) => {
+  dispatch(emailVerificationStart());
+  try {
+    await verifyEmailToken(token);
+    dispatch(emailVerificationSuccess());
+  } catch (error: any) {
+    dispatch(emailVerificationFailure());
+    console.error('There was an error verifying the email:', error);
+  }
+};
 
 // Adjust login thunk
 export const login = (email: string, password: string): AppThunk => async (dispatch) => {
@@ -110,7 +159,6 @@ export const performLogout = (): AppThunk => async (dispatch) => {
     alert(error.message)
   }
 };
-
 
 export const requestPasswordReset = (email: string): AppThunk => async (dispatch) => {
   dispatch(passwordResetStart());

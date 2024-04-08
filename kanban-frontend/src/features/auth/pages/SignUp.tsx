@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form as BootstrapForm, Alert, Container, Row, Col, Card } from 'react-bootstrap';
 import { SignupFormValues } from '../../../types';
 import SignUpImg from '../../../assets/bg4.jpg'
-import { signup } from '../authService';
-import { useAppSelector } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { useEffect } from 'react';
+import { performSignup } from '../authSlice';
+
 
 const initialValues: SignupFormValues = {
     username: '',
@@ -29,8 +30,9 @@ export const validationSchema = Yup.object({
 
 export const SignupForm: React.FC = () => {
     const navigate = useNavigate();
-
     const loginStatus = useAppSelector(state => state.auth.isLoggedIn);
+    const signupStatus = useAppSelector(state => state.auth.signupStatus);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (loginStatus) {
@@ -38,19 +40,40 @@ export const SignupForm: React.FC = () => {
         }
     }, [loginStatus]);
 
+    useEffect(() => {
+        if (signupStatus === 'success') {
+            navigate('/verification-sent');
+        }
+    }, [signupStatus, navigate]);
+
     const handleSubmit = async (
-      values: SignupFormValues,
-      { setSubmitting }: FormikHelpers<SignupFormValues>
-    ) => {
-      try {
-        await signup(values); // Directly call the signup service with form values
-        navigate('/verification-sent'); // Navigate on successful signup
-      } catch (error: any) {
-        alert(error.response.data.detail || "An error occurred during signup."); // Simplistic error handling, consider improving
-      } finally {
-        setSubmitting(false); // Ensure submitting is set to false in all cases
-      }
-    };
+        values: SignupFormValues,
+        { setSubmitting, setErrors }: FormikHelpers<SignupFormValues>
+      ) => {
+        try {
+          dispatch(performSignup(values));
+        } catch (error: any) {
+          const errorMessage = error.response?.data.detail || "An error occurred during signup.";
+          setErrors({email: errorMessage});
+          alert(error.response.data.detail || "An error occurred during signup.");
+        } finally {
+          setSubmitting(false);
+        }
+      };
+
+    // const handleSubmit = async (
+    //   values: SignupFormValues,
+    //   { setSubmitting }: FormikHelpers<SignupFormValues>
+    // ) => {
+    //   try {
+    //     await signup(values); // Directly call the signup service with form values
+    //     navigate('/verification-sent'); // Navigate on successful signup
+    //   } catch (error: any) {
+    //     alert(error.response.data.detail || "An error occurred during signup."); // Simplistic error handling, consider improving
+    //   } finally {
+    //     setSubmitting(false); // Ensure submitting is set to false in all cases
+    //   }
+    // };
     
     return(
         <Container fluid className="p-0 m-0 d-flex" style={{ minHeight: '100vh' }}>
@@ -133,5 +156,5 @@ export const SignupForm: React.FC = () => {
             </Col>
             </Row>
         </Container>
-)
+    )
 }
