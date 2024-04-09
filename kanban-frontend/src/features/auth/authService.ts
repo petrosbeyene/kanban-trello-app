@@ -1,9 +1,8 @@
 import axios from 'axios'
 import { SigninResponse } from '../../types';
-import { User } from '../../types';
 
 const { 
-  VITE_SIGNUP_ENDPOINT, VITE_SIGNIN_ENDPOINT, VITE_USER_DETAILS_ENDPOINT,
+  VITE_SIGNUP_ENDPOINT, VITE_SIGNIN_ENDPOINT,
   VITE_LOGOUT_ENDPOINT, VITE_PASSWORD_RESET_ENDPOINT, VITE_PASSWORD_RESET_CONFIRM_ENDPOINT, VITE_EMAIL_VERIFICATION_BASE_URL
 } = import.meta.env;
 
@@ -34,15 +33,6 @@ export const verifyEmailToken = async (token: string) => {
 export const signin = async (payload: SigninPayload): Promise<SigninResponse> => {
     const response = await axios.post(VITE_SIGNIN_ENDPOINT, payload);
     return response.data;
-};
-
-export const fetchUserDetails = async (token: string): Promise<User> => {
-  const response = await axios.get(VITE_USER_DETAILS_ENDPOINT, {
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-  });
-  return response.data;
 };
 
 export const logOut = async (): Promise<void> => {

@@ -6,7 +6,7 @@ import { performLogout } from '../../auth/authSlice';
 
 const ProjectsNavigationBar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const userEmail = useAppSelector((state) => state.auth.user?.email);
+  const userEmail = useAppSelector((state) => state.profile.user?.email);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const handleLogout = () => {
@@ -14,7 +14,7 @@ const ProjectsNavigationBar: React.FC = () => {
   };
 
   return (
-    <Navbar expand="lg" variant="light" bg="white" style={{ borderBottom: '1px solid #ddd' }}> {/* Added borderBottom for subtle separation */}
+    <Navbar expand="lg" variant="light" bg="white" style={{ borderBottom: '1px solid #ddd' }}>
       <Container>
         <Navbar.Brand 
           as={Link} 
@@ -28,6 +28,7 @@ const ProjectsNavigationBar: React.FC = () => {
           <Nav className="ms-auto">
             {isLoggedIn ? (
               <NavDropdown title={userEmail || 'User'} id="basic-nav-dropdown" style={{ color: 'black' }}>
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/boards">Boards</NavDropdown.Item>
                 <NavDropdown.Item href="/reset-password">Reset Password</NavDropdown.Item>
                 <NavDropdown.Divider />

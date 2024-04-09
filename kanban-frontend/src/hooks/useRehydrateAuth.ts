@@ -1,20 +1,20 @@
 // src/app/hooks/useRehydrateAuth.ts
 import { useEffect } from 'react';
-import { useAppDispatch } from '../app/hooks'; // Adjust the path as necessary
+import { useAppDispatch } from '../app/hooks';
 import { loginSuccess } from '../features/auth/authSlice';
-// Assuming you have a function to possibly validate the token or fetch user details
-import { fetchUserDetails } from '../features/auth/authService';
+import { fetchUserProfile } from '../features/profile/profileSlice';
 
 const useRehydrateAuth = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // console.log(user)
     const rehydrateAuth = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const userDetails = await fetchUserDetails(token);
-          dispatch(loginSuccess({ token, user: userDetails }));
+          dispatch(fetchUserProfile());
+          dispatch(loginSuccess({ token }));
         } catch (error) {
           console.error("Error rehydrating auth", error);
         }

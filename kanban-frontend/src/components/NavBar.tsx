@@ -10,7 +10,7 @@ const NavigationBar: React.FC = () => {
   // Access Redux store state
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  const userEmail = useAppSelector((state) => state.auth.user?.email); 
+  const userEmail = useAppSelector((state) => state.profile.user?.email); 
 
   const handleLogout = () => {
     dispatch(performLogout());
@@ -36,13 +36,13 @@ const NavigationBar: React.FC = () => {
                   id="basic-nav-dropdown"
                   className="overlay"
               >
+                <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
                 <NavDropdown.Item href="/boards">Boards</NavDropdown.Item>
                 <NavDropdown.Item href="/reset-password">Reset Password</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
               </NavDropdown>
             ) : (
-              // Show Login and SignUp options when not logged in
               <>
                 <Nav.Link 
                   as={Link} 

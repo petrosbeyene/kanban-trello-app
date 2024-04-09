@@ -1,10 +1,12 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../app/hooks';
+import { useAppSelector } from '../app/hooks'; // Ensure this path is correct
 
 export const ProtectedRoute: React.FC = () => {
-  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  const token = localStorage.getItem('token'); // or sessionStorage based on where you store it
+  const { isLoggedIn, loading } = useAppSelector((state) => state.auth);
 
-  return isLoggedIn && token ? <Outlet /> : <Navigate to="/login" />;
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
 };

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../../app/store';
-import { signup, signin, fetchUserDetails, logOut, resetPassword, handleConfirmPasswordReset, verifyEmailToken } from './authService';
-import { User, SignupFormValues } from '../../types';
+import { signup, signin, logOut, resetPassword, handleConfirmPasswordReset, verifyEmailToken } from './authService';
+import { SignupFormValues } from '../../types';
 
 
 interface AuthState {
@@ -11,7 +11,6 @@ interface AuthState {
   isLoggedIn: boolean;
   loading: boolean;
   error: string | null;
-  user: User | null;
   passwordResetStatus: 'idle' | 'loading' | 'success' | 'failure';
 }
 
@@ -20,9 +19,8 @@ const initialState: AuthState = {
   emailVerificationStatus: 'idle',
   token: null,
   isLoggedIn: false,
-  loading: false,
+  loading: true,
   error: null,
-  user: null,
   passwordResetStatus: 'idle',
 };
 
@@ -48,16 +46,11 @@ export const authSlice = createSlice({
     emailVerificationFailure: (state) => {
       state.emailVerificationStatus = 'failure';
     },
-    loginStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    loginSuccess: (state, action: PayloadAction<{ token: string; user: User }>) => {
+    loginSuccess: (state, action: PayloadAction<{ token: string }>) => {
       state.isLoggedIn = true;
       state.loading = false;
       state.error = null;
       state.token = action.payload.token;
-      state.user = action.payload.user;
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -67,7 +60,6 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false;
       state.token = null;
-      state.user = null;
     },
     passwordResetStart: (state) => {
       state.passwordResetStatus = 'loading';
@@ -98,8 +90,7 @@ export const authSlice = createSlice({
 
 export const {
   signupStart, signupSuccess, signupFailure,
-  emailVerificationStart, emailVerificationSuccess, emailVerificationFailure,
-  loginStart, loginSuccess, loginFailure, logout,
+  emailVerificationStart, emailVerificationSuccess, emailVerificationFailure, loginSuccess, loginFailure, logout,
   passwordResetStart, passwordResetSuccess, passwordResetFailure, resetPasswordResetStatus,
   confirmPasswordResetStart, confirmPasswordResetFailure, confirmPasswordResetSuccess
 } = authSlice.actions;
@@ -131,13 +122,11 @@ export const verifyEmail = (token: string): AppThunk => async (dispatch) => {
 
 // Adjust login thunk
 export const login = (email: string, password: string): AppThunk => async (dispatch) => {
-  dispatch(loginStart());
   try {
     const signinData = await signin({ email, password });
-    if (signinData.key) { // Assuming the token is returned under the key property
-      const userData = await fetchUserDetails(signinData.key);
-      dispatch(loginSuccess({ token: signinData.key, user: userData }));
-      localStorage.setItem('token', signinData.key); // Store the token in localStorage
+    if (signinData.key) {
+      dispatch(loginSuccess({ token: signinData.key }));
+      localStorage.setItem('token', signinData.key);
     } else {
       dispatch(loginFailure('No token received'));
     }

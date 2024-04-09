@@ -121,6 +121,6 @@ export const projectSlice = createSlice({
 
 export const selectProjects = (state: RootState): Project[] => state.projects.projects;
 export const selectProjectsStatus = (state: RootState) => state.projects.status;
-export const selectCreationStatus = (state: RootState) => state.projects.creationStatus; // New selector for creation status
+export const selectCreationStatus = (state: RootState) => state.projects.creationStatus;
 
 export default projectSlice.reducer;

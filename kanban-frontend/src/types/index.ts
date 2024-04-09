@@ -18,6 +18,12 @@ export interface User {
     last_name: string;
 }
 
+export interface userUpdateFormValues {
+    first_name: string;
+    last_name: string;
+}
+
+
 export interface Project {
     id?: number;
     title: string;
