@@ -37,7 +37,7 @@ Before starting, ensure you have the following software installed:
     ```
 
     On macOS and Linux: 
-    ````bash 
+    ```bash 
     source .venv/bin/activate 
     ```
 
