@@ -1,0 +1,22 @@
+.project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.project-card .card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  height: 4.5em;
+}
+
+.project-card .card-img-top {
+  height: 180px; /* Adjust based on your preference */
+  object-fit: cover; /* This will ensure the image covers the area without distorting aspect ratio */
+}
+
+  

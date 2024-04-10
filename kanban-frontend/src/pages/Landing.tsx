@@ -20,8 +20,8 @@ const Landing: React.FC = () => {
                         prioritize your projects in a fun, flexible, and rewarding way.
                     </h4>
                     {isLoggedIn ? (
-                        <Link to="/boards" className="btn-link">
-                            <Button variant="primary">Go to boards</Button>
+                        <Link to="/projects" className="btn-link">
+                            <Button variant="primary">Go to projects</Button>
                         </Link>
                     ): (
                         <Link to="/signup" className="btn-link">

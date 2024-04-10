@@ -37,7 +37,7 @@ const NavigationBar: React.FC = () => {
                   className="overlay"
               >
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/boards">Boards</NavDropdown.Item>
+                <NavDropdown.Item href="/projects">Projects</NavDropdown.Item>
                 <NavDropdown.Item href="/reset-password">Reset Password</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

@@ -29,7 +29,7 @@ const ProjectsNavigationBar: React.FC = () => {
             {isLoggedIn ? (
               <NavDropdown title={userEmail || 'User'} id="basic-nav-dropdown" style={{ color: 'black' }}>
                 <NavDropdown.Item href="/profile">Profile</NavDropdown.Item>
-                <NavDropdown.Item href="/boards">Boards</NavDropdown.Item>
+                <NavDropdown.Item href="/projects">Projects</NavDropdown.Item>
                 <NavDropdown.Item href="/reset-password">Reset Password</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>

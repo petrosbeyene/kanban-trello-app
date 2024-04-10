@@ -61,6 +61,11 @@ export const LoginForm: React.FC = () => {
                     </BootstrapForm.Group>
 
                     <Button type="submit" className='w-100' disabled={isSubmitting}>Login</Button>
+
+                    {/* Redirect to signup */}
+                    <div className="mt-3 text-center">
+                        Don't have an account yet? <a href="/signup">SignUp</a>
+                    </div>
                   </Form>
                 )}
               </Formik>
