@@ -1,7 +1,7 @@
 // src/app/hooks/useRehydrateAuth.ts
 import { useEffect } from 'react';
 import { useAppDispatch } from '../app/hooks';
-import { loginSuccess } from '../features/auth/authSlice';
+import { loginSuccess, loginFailure } from '../features/auth/authSlice';
 import { fetchUserProfile } from '../features/profile/profileSlice';
 
 const useRehydrateAuth = () => {
@@ -13,10 +13,11 @@ const useRehydrateAuth = () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          dispatch(fetchUserProfile());
+          await dispatch(fetchUserProfile()).unwrap();
           dispatch(loginSuccess({ token }));
         } catch (error) {
           console.error("Error rehydrating auth", error);
+          dispatch(loginFailure('Failed to fetch user profile'));
         }
       }
     };

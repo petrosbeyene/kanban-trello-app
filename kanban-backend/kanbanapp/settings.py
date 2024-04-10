@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
+    'django_celery_beat',
+    'django_celery_results',
 
     #installed apps
     'users',
@@ -173,6 +175,10 @@ LOGIN_URL = os.environ.get("LOGIN_URL")
 
 ACCOUNT_ADAPTER = 'users.adapters.custom_email_adapter.CustomEmailAdapter'
 
+
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_REDIS_URL', 'redis://127.0.0.1:6379')
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
