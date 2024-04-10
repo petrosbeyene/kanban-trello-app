@@ -98,7 +98,6 @@ Before starting, ensure you have the following software installed:
 
 
 ### Additional Information
-Ensure that the backend and Redis server are running before starting the Celery worker.
-Adjust the kanbanapp in the Celery command to match your Django project's name if it differs.
-For more detailed instructions on setting up Redis, refer to the official Redis documentation.
-Consult the Django and DRF documentation for further customization and setup options.
+- Ensure that the backend and Redis server are running before starting the Celery worker.
+- For more detailed instructions on setting up Redis, refer to the official Redis documentation.
+- Consult the Django and DRF documentation for further customization and setup options.
