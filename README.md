@@ -19,6 +19,8 @@ Before starting, ensure you have the following software installed:
     Begin by cloning the repository to your local machine:
     ```bash
     git clone https://github.com/petrosbeyene/kanban-trello-app.git
+    ```
+    ```bash
     cd kanban-trello-app/kanban-backend
     ```
 
@@ -40,28 +42,40 @@ Before starting, ensure you have the following software installed:
     ````bash 
     source .venv/bin/activate 
     ```
+3. **Create .env File**
 
-3. **Install Dependencies**
+    Create a .env file in the kanban-backend directory. This file should contain all the necessary environment variables required for the backend to run properly. Refer to the .env.example file in the backend directory for a template.
+
+4. **Install Dependencies**
 
     Install all required packages from the requirements.txt file:
     ```bash
     pip install -r requirements.txt
     ```
 
-4. **Start the Backend Server**
+5. **Run Migrations**
+
+    Before starting the server, you need to apply migrations to set up your database. Run the following command:
+    ```bash
+    python manage.py migrate
+    ```
+
+6. **Start the Backend Server**
 
     Run the Django server:
     ```bash
     python manage.py runserver
     ```
 
-5. **Start Redis Server**
+7. **Start Redis Server**
 
     Ensure that [Redis](https://redis.io/) server is installed on your machine and start the Redis server. The command might vary depending on your operating system.
 
-6. **Start Celery Worker**
+8. **Start Celery Worker**
 
-    Start the Celery worker. For Windows users, the -P eventlet flag is necessary:
+    Before starting the Celery worker, open a new terminal, navigate to the `kanban-backend` directory, and ensure that your virtual environment is activated.
+
+    After activating the virtual environment, proceed with starting the Celery worker. For Windows users, the `-P eventlet` flag is necessary:
 
     On Windows:
     ```bash
@@ -76,9 +90,14 @@ Before starting, ensure you have the following software installed:
 ### Frontend Setup
 
 1. **Navigate to the Frontend Directory**
+    Open a new terminal, and navigate to the `kanban-frontend` directory:
+
     ```bash
     cd kanban-trello-app/kanban-frontend
     ```
+2. **Create .env File**
+
+    Create a .env file in the kanban-frontend directory. This file will store environment variables needed by the frontend. Use the .env.example file in the frontend directory as a reference for the required variables.
 
 2. **Install Dependencies**
 

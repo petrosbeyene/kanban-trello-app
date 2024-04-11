@@ -7,9 +7,11 @@ import ProjectCard from '../components/ProjectCard';
 import ProjectDetailsModal from '../components/ProjectDetailModal';
 import CreateProjectModal from '../components/CreateProjectModal';
 import { Project } from '../../../types';
+import useRehydrateAuth from '../../../hooks/useRehydrateAuth';
 
 
 export const ProjectsDisplay: React.FC = () => {
+  useRehydrateAuth()
   const dispatch = useAppDispatch();
   const projects = useAppSelector(selectProjects);
 
