@@ -10,11 +10,11 @@ const useRehydrateAuth = () => {
   useEffect(() => {
     // console.log(user)
     const rehydrateAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
         try {
           await dispatch(fetchUserProfile()).unwrap();
-          dispatch(loginSuccess({ token }));
+          dispatch(loginSuccess({ accessToken }));
         } catch (error) {
           console.error("Error rehydrating auth", error);
           dispatch(loginFailure('Failed to fetch user profile'));

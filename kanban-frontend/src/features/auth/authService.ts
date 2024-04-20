@@ -1,5 +1,6 @@
-import axios from 'axios'
+// import axiosWithAuthRefresh from '../../axiosConfig'
 import { SigninResponse } from '../../types';
+import axios from 'axios'
 
 const { 
   VITE_SIGNUP_ENDPOINT, VITE_SIGNIN_ENDPOINT,
@@ -21,8 +22,9 @@ interface SigninPayload {
     password: string;
 }
 
+
 export const signup = async (payload: SignupPayload): Promise<void> => {
-    await axios.post(VITE_SIGNUP_ENDPOINT, payload);
+  await axios.post(VITE_SIGNUP_ENDPOINT, payload);
 };
 
 export const verifyEmailToken = async (token: string) => {
@@ -31,20 +33,23 @@ export const verifyEmailToken = async (token: string) => {
 };
 
 export const signin = async (payload: SigninPayload): Promise<SigninResponse> => {
-    const response = await axios.post(VITE_SIGNIN_ENDPOINT, payload);
-    return response.data;
+  const response = await axios.post(VITE_SIGNIN_ENDPOINT, payload);
+  return response.data;
 };
 
+
 export const logOut = async (): Promise<void> => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        await axios.post(VITE_LOGOUT_ENDPOINT, {}, {
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-        });
-    }
-}
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+      await axios.post(VITE_LOGOUT_ENDPOINT, {
+          headers: {
+              Authorization: `Bearer ${accessToken}`,
+          },
+      });
+  }
+  localStorage.removeItem('accessToken');
+};
+
 
 export const resetPassword = async (email: string): Promise<void> => {
   await axios.post(VITE_PASSWORD_RESET_ENDPOINT, { email });

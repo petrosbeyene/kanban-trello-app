@@ -36,7 +36,7 @@ export const SignupForm: React.FC = () => {
 
     useEffect(() => {
         if (loginStatus) {
-        navigate('/boards');
+        navigate('/projects');
         }
     }, [loginStatus]);
 

@@ -7,7 +7,7 @@ import { SignupFormValues } from '../../types';
 interface AuthState {
   signupStatus: 'idle' | 'loading' | 'success' | 'failure';
   emailVerificationStatus: 'idle' | 'loading' | 'success' | 'failure';
-  token: string | null;
+  accessToken: string | null;
   isLoggedIn: boolean;
   loading: boolean;
   error: string | null;
@@ -17,7 +17,7 @@ interface AuthState {
 const initialState: AuthState = {
   signupStatus: 'idle',
   emailVerificationStatus: 'idle',
-  token: null,
+  accessToken: null,
   isLoggedIn: false,
   loading: true,
   error: null,
@@ -46,20 +46,20 @@ export const authSlice = createSlice({
     emailVerificationFailure: (state) => {
       state.emailVerificationStatus = 'failure';
     },
-    loginSuccess: (state, action: PayloadAction<{ token: string }>) => {
+    loginSuccess: (state, action: PayloadAction<{ accessToken: string }>) => {
       state.isLoggedIn = true;
       state.loading = false;
       state.error = null;
-      state.token = action.payload.token;
+      state.accessToken = action.payload.accessToken;
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
-      state.token = null;
+      state.accessToken = null;
     },
     logout: (state) => {
       state.isLoggedIn = false;
-      state.token = null;
+      state.accessToken = null;
     },
     passwordResetStart: (state) => {
       state.passwordResetStatus = 'loading';
@@ -124,9 +124,9 @@ export const verifyEmail = (token: string): AppThunk => async (dispatch) => {
 export const login = (email: string, password: string): AppThunk => async (dispatch) => {
   try {
     const signinData = await signin({ email, password });
-    if (signinData.key) {
-      dispatch(loginSuccess({ token: signinData.key }));
-      localStorage.setItem('token', signinData.key);
+    if (signinData.access) {
+      dispatch(loginSuccess({ accessToken: signinData.access }));
+      localStorage.setItem('accessToken', signinData.access);
     } else {
       dispatch(loginFailure('No token received'));
     }
@@ -140,7 +140,6 @@ export const login = (email: string, password: string): AppThunk => async (dispa
 export const performLogout = (): AppThunk => async (dispatch) => {
   try {
     await logOut();
-    localStorage.removeItem('token');
     dispatch(logout());
     alert("Success!")
   } catch (error: any) {

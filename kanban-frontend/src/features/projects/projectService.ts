@@ -8,10 +8,10 @@ const { VITE_PROJECTS_BASE_URL } = import.meta.env;
 
 export const fetchProjects = async () => {
   try {
-    const token = localStorage.getItem('token');
+    const accessToken = localStorage.getItem('accessToken');
     const response = await axios.get(VITE_PROJECTS_BASE_URL, {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
     });
     return response.data;
@@ -32,10 +32,10 @@ export const createProject = async (project: Project) => {
     }
   
     try {
-      const token = localStorage.getItem('token');
+      const accessToken = localStorage.getItem('accessToken');
       const response = await axios.post(VITE_PROJECTS_BASE_URL, formData, {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       return response.data;
@@ -47,10 +47,10 @@ export const createProject = async (project: Project) => {
 
 export const updateProject = async (id: number, formData: FormData) => {
     try {
-        const token = localStorage.getItem('token');
+        const accessToken = localStorage.getItem('accessToken');
         const response = await axios.put(`${VITE_PROJECTS_BASE_URL}${id}/`, formData, {
             headers: {
-                Authorization: `Token ${token}`,
+              Authorization: `Bearer ${accessToken}`,
             },
         });
         return response.data;
@@ -63,10 +63,10 @@ export const updateProject = async (id: number, formData: FormData) => {
 
 export const deleteProject = async (id: number) => {
     try {
-        const token = localStorage.getItem('token');
+        const accessToken = localStorage.getItem('accessToken');
         const response = await axios.delete(`${VITE_PROJECTS_BASE_URL}${id}/`, {
             headers: {
-                Authorization: `Token ${token}`,
+              Authorization: `Bearer ${accessToken}`,
             },
         });
         return response.data; // Or return a success message/indicator as needed

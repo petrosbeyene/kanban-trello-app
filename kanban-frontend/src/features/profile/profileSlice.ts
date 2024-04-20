@@ -18,22 +18,22 @@ const initialState: UserProfileState = {
 export const fetchUserProfile = createAsyncThunk(
     'profile/fetchUserProfile',
     async () => {
-        const token = localStorage.getItem('token')
-        if (token === null){
+        const accessToken = localStorage.getItem('accessToken')
+        if (accessToken === null){
             throw new Error('Token not found in local storage');
         }
-        return await fetchUserDetails(token);
+        return await fetchUserDetails(accessToken);
     }
 );
 
 export const updateUserProfile = createAsyncThunk(
-    'profile/updateUserProfile', 
+    'profile/updateUserProfile',
     async ({ profileData }: { profileData: userUpdateFormValues }) => {
-        const token = localStorage.getItem('token')
-        if (token === null){
+        const accessToken = localStorage.getItem('accessToken')
+        if (accessToken === null){
             throw new Error('Token not found in local storage');
         }
-        return await updateUserDetails(token, profileData);
+        return await updateUserDetails(accessToken, profileData);
     }
 );
 

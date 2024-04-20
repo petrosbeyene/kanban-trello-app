@@ -8,8 +8,10 @@ export interface SignupFormValues {
 }
 
 export interface SigninResponse {
-    key: string;
-}
+    access: string;
+    refresh: string;
+  }
+  
 
 export interface User {
     id: number;
